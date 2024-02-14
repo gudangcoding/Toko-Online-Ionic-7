@@ -44,13 +44,14 @@ export class LoginPage implements OnInit {
       }
     };
   
-    const response: HttpResponse = await CapacitorHttp.get(options);
+    const response: HttpResponse = await CapacitorHttp.post(options);
     if (response.data.success==true) {
       this.util.dismissLoading();
       this.sesi.set('member', response.data.data);
         this.router.navigate(['/home/beranda'], { replaceUrl: true });
     }else{
-      this.util.alertNotif('Login Gagal, Cek Email dan Password');
+      this.util.dismissLoading();
+      this.util.toastNotif('Login Gagal, Cek Email dan Password');
     }
   }
 

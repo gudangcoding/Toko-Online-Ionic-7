@@ -5,6 +5,7 @@ import { CartService } from 'src/app/cart.service';
 import { Helper } from 'src/provider/Helper';
 import { RestApi } from 'src/provider/RestApi';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
+import { ApiService } from 'src/app/services/ApiService';
 
 @Component({
   selector: 'app-beranda',
@@ -28,6 +29,7 @@ export class BerandaPage implements OnInit {
     private router: Router,
     private util: Helper,
     private cartservice: CartService,
+    private api2: ApiService,
   ) {
     // this.loadData(null);
     // this.loadMoreData();
@@ -37,6 +39,7 @@ export class BerandaPage implements OnInit {
 
   ngOnInit() {
     this.loadData(null);
+    // this.getProduct(1);
     this.keranjang;
     this.member;
   }
@@ -45,22 +48,18 @@ export class BerandaPage implements OnInit {
   async getProduct(page: number) {
     // return this.api.get(`produk?page=${page}`);
     const options = {
-      url: 'https://toko-amsis.my.id/api/produk',
-      headers: { 'Content-Type': 'application/json' },
-      data: { page: page },
+      url: 'https://toko-amsis.my.id/api/produk?page='+page,
+      headers: { 'Content-Type': 'application/json' }
     };
-  
     return await CapacitorHttp.get(options);
   }
-
-
   
   loadData(event: any) {
     this.util.showLoading();
     console.log('Hasil Event : ', event);
     this.getProduct(this.currentPage).then((res: any) => {
       this.util.dismissLoading();
-      this.products = this.products.concat(res.data);
+      this.products = this.products.concat(res.data.data);
       console.log('event ', event);
 
       if (event) {
@@ -82,7 +81,6 @@ export class BerandaPage implements OnInit {
     const endIndex = startIndex + this.itemsPerPage;
 
     try {
-      // this.response = await this.http.get<any[]>(apiUrl).toPromise();
       this.api.get('produk').subscribe((res: any) => {
         this.util.dismissLoading();
         this.response = res.data;

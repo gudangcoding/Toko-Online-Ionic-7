@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Helper } from 'src/provider/Helper';
 import { RestApi } from 'src/provider/RestApi';
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 
 @Component({
   selector: 'app-cari',

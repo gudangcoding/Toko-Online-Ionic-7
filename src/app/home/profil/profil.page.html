@@ -7,12 +7,12 @@
 
   <div class="profile-info">
   
-    <div class="profile-picture" (click)="takePicture()">
+    <div class="profile-picture" (click)="takePicture(profil.id_member)">
       <img src="{{profil.foto}}" *ngIf="profil.foto" alt="Profile">
-      <ion-icon name="camera-outline" (click)="takePicture()"></ion-icon>
+      <ion-icon name="camera-outline" (click)="takePicture(profil.id_member)"></ion-icon>
     </div>
 
-    <div class="profile-picture" (click)="takePicture()">
+    <div class="profile-picture" (click)="takePicture(profil.id_member)">
       <img [src]="profilePhoto" *ngIf="!profil.foto" alt="Profile">
     </div>
 

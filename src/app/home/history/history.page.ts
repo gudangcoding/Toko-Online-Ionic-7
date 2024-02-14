@@ -62,21 +62,21 @@ export class HistoryPage implements OnInit {
   }
 
   async getOrder() {
-    const options = {
-      url: 'https://toko-amsis.my.id/api/order/list',
-      headers: { 'X-Fake-Header': 'Fake-Value' },
-      params: { id: this.user.id_member },
-    };
+    // const options = {
+    //   url: 'https://toko-amsis.my.id/api/order/list',
+    //   headers: { 'X-Fake-Header': 'Fake-Value' },
+    //   params: { id: this.user.id_member },
+    // };
 
-    const response: HttpResponse = await CapacitorHttp.get(options);
-    this.products = response.data.data;
-    // let body = {
-    //   id: this.user.id_member
-    // }
-    // this.api.postWithToken(body, 'order/list', this.user.token).subscribe((res: any) => {
-    //   console.log(res);
-    //   this.products = res.data;
-    // });
+    // const response: HttpResponse = await CapacitorHttp.get(options);
+    // this.products = response.data.data;
+    let body = {
+      id: this.user.id_member
+    }
+    this.api.postWithToken(body, 'order/list', this.user.token).subscribe((res: any) => {
+      console.log(res);
+      this.products = res.data;
+    });
   }
 
   async takePicture(id: any) {
@@ -90,21 +90,21 @@ export class HistoryPage implements OnInit {
   }
 
   async uploadPicture(imageData: any, id: any) {
-    const options = {
-      url: 'https://toko-amsis.my.id/api/order/uploadbukti',
-      headers: { 'Content-Type': 'application/json' },
-      params: {
-        image: imageData,
-        id: id,
-      },
-    };
-    const response: HttpResponse = await CapacitorHttp.post(options);
+    // const options = {
+    //   url: 'https://toko-amsis.my.id/api/order/uploadbukti',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   params: {
+    //     image: imageData,
+    //     id: id,
+    //   },
+    // };
+    // const response: HttpResponse = await CapacitorHttp.post(options);
 
-    // const postData = { image: imageData, id: id };
-    // this.api
-    //   .postWithToken(postData, 'order/uploadbukti', this.user.token)
-    //   .subscribe((res: any) => {
-    //     this.getOrder();
-    //   });
+    const postData = { image: imageData, id: id };
+    this.api
+      .postWithToken(postData, 'order/uploadbukti', this.user.token)
+      .subscribe((res: any) => {
+        this.getOrder();
+      });
   }
 }

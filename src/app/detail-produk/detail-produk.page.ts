@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RestApi } from 'src/provider/RestApi';
 import { CartService } from '../services/cart.service';
 import { Helper } from 'src/provider/Helper';
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 
 @Component({
   selector: 'app-detail-produk',
@@ -32,20 +33,26 @@ export class DetailProdukPage implements OnInit {
     this.route.queryParams.subscribe((params: any) => {
       this.productId = params.id;
       console.log(this.productId);
-
     });
-    
   }
 
   ngOnInit() {
     this.getProduct();
   }
 
-  getProduct() {
-    this.api.get('produk/detail/' + this.productId).subscribe((res: any) => {
-      console.log(res);
-      this.products = res;
-    });
+  async getProduct() {
+    const options = {
+      url: 'https://toko-amsis.my.id/api/produk/detail/' + this.productId,
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const response: HttpResponse = await CapacitorHttp.get(options);
+    this.products = response.data;
+    console.log('Ini Datanya : ',response.data);
+
+    // this.api.get('produk/detail/' + this.productId).subscribe((res: any) => {
+    //   console.log(res);
+    //   this.products = res;
+    // });
   }
 
   isWishlistAdded: boolean = false;
